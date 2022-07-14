@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors')
 const express = require('express');
 const routerApi = require('./routes');
 const { logErrors, errorHandler, boomErrorHandler} = require('./middlewares/error.handler');
@@ -6,6 +7,21 @@ const { logErrors, errorHandler, boomErrorHandler} = require('./middlewares/erro
 const app = express();
 
 app.use(express.json());
+
+//LISTADO DE ORIGINES ACEPTADOS
+const whiteList = ["http://192.168.100.5:3000", "http://localhost:3000", "https://myapp.co"];
+const options = {
+    origin: (origin, callback) =>{
+
+        if(whiteList.includes(origin)){
+          callback(null,true);
+        }
+        else{
+          callback(new Error('Access denied'));
+        }
+    }
+};
+app.use(cors(options));
 
 routerApi(app);
 
