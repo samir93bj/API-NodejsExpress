@@ -27,21 +27,10 @@ class ProductsService {
   //CREATE PRODUCT
   async create(data){
 
-    if(!data.name){
-      throw new Error('Name is not defined');
-    }
-
-    if(!data.price){
-      throw new Error('Price is not defined');
-    }
-
-    if(!data.image){
-      throw new Error('Image is not defined');
-    }
-
     const newProduct = {
       id: faker.datatype.uuid(),
-      ...data
+      ...data,
+      isBlock: false
     }
 
     this.products.push(newProduct);
@@ -107,7 +96,7 @@ class ProductsService {
 
     this.products.splice(index, 1);
 
-    return { id };
+    return  id ;
   }
 }
 

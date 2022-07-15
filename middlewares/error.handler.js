@@ -20,6 +20,9 @@ function boomErrorHandler(err, req, res, next){
     console.log("boomErrorHandler: "+output.payload.message);
     res.status(output.statusCode).json(output.payload);
   }
+  else{
+    next(err);
+  }
 }
 
 
