@@ -5,7 +5,7 @@ const routerApi = require('./routes');
 const { logErrors, errorHandler, boomErrorHandler} = require('./middlewares/error.handler');
 
 const app = express();
-const port = process.env.PUERTO || 3000;
+const port = 3000;
 
 app.use(express.json());
 
@@ -36,7 +36,7 @@ app.use(boomErrorHandler);
 app.use(errorHandler);
 
 app.listen(port, () => {
-    console.log(`Mi port'${port}`);
+    console.log('Mi port: '+port);
     //console.log('Aplicacion corriendo en: http://'+process.env.IP+':'+port+'/api/'+process.env.VERSION);
 });
 
