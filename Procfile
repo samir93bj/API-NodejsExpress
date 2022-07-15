@@ -1,1 +1,1 @@
-web:npm run start --bind :$PORT
+web:npm run start
