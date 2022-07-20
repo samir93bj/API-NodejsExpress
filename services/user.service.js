@@ -16,27 +16,45 @@ class usersService {
 
   //GET USER
   async findOne(id){
+    const user = await models.User.findByPk(id);
 
-    return id;
+      if(!user){
+        throw boom.notFound('User not found');
+      }
+
+    return user;
   }
 
   //CREATE USER
   async create(data){
-
-    return data;
-
+    const newUser = await models.User.create(data);
+    return newUser;
   }
 
   //UPDATE USER
   async update(id, data){
 
-      return id, data;
+    const getUser = await this.findOne(id);
+
+    if(!getUser){
+        throw boom.notFound('User not found');
+      }
+    const user = await getUser.update(data);
+
+    return user;
   }
 
   //DELETE USER
   async delete(id){
 
-    return  id ;
+    const getUser = await this.findOne(id);
+
+    if(!getUser){
+      throw boom.notFound('User not found');
+    }
+
+    await getUser.destroy(id);
+    return  id;
   }
 }
 

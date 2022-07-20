@@ -52,39 +52,21 @@ class ProductsService {
   //UPDATE PRODUCT
   async update(id, data){
 
-      const index = this.products.findIndex(item => item.id === id);
+      const getProduct = await this.findOne(id);
 
-      if(index === -1){
-        //throw new Error('Product not found');
-        throw boom.notFound('Product not found');
-      }
+      const productUp = await getProduct.update(data);
 
-      if(data.id){
-        //throw new Error('You cannot update the id');
-        throw boom.notFound('You cannot update the id');
-      };
-
-      const product = this.products[index];
-      this.products[index] = {
-        ...product,
-        ...data
-      }
-
-      return this.products[index];
+      return productUp;
   }
 
   //DELETE PRODUCT
   async delete(id){
-    const index = this.products.findIndex(item => item.id === id);
 
-    if(index === -1){
-      //throw new Error('Product not found');
-      throw boom.notFound('Product not found');
-    }
+    const getProduct = await this.findOne(id);
 
-    this.products.splice(index, 1);
+    await getProduct.destroy(id);
 
-    return  id ;
+    return id ;
   }
 }
 

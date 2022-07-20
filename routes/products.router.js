@@ -88,23 +88,24 @@ router.patch('/:id',
 });
 
 //DELETE PRODUCT
-router.delete('/:id', async (req,res) => {
+router.delete('/:id',
+validatorHandler(getProductSchema, 'params'),
+
+async (req,res,next) => {
 
   try{
     const id = req.params.id;
+    const productDeleted = await service.delete(id);
 
-    res.status(200).json({
-      message: 'Delete succesfully',
-      id
-    });
+      res.status(200).json({
+        message:"Product Deleted",
+        productDeleted
+      });
+    }catch(err){
+      next(err);
+    }
 
-  }catch(error){
-
-    res.status(404).json({
-      message: error.message
-    });
-}
-  });
+});
 
 
 
