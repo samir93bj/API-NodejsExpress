@@ -38,51 +38,28 @@ async findOne(id){
 //CREATE CATEGORY
 async create(data){
 
-  const newCategory = {
-      id : faker.datatype.uuid(),
-      ...data,
-      isBlock: false
-  };
+  const category = await models.Category.create(data);
 
-  this.categories.push(newCategory);
-
-  return newCategory;
+  return category;
 }
 
 //UPDATE CATEGORY
 async update(data, id){
 
-    const index = this.categories.findIndex(item => item.id === id );
+    const getCategory = await this.findOne(id);
+    const category = await getCategory.update(data);
 
-    if(index === -1){
-      throw boom.notFound('Category not found');
-    }
-
-    if(data.id){
-      throw boom.conflict('You cannot update the id');
-    };
-
-    const product = this.categories[index];
-    this.categories[index] = {
-        ...product,
-        ...data
-      }
-
-    return this.categories[index];
+    return category;
 
 }
 
 //DELETE CATEGORY
 async detele(id){
-  const index = this.categories.findIndex(item => item.id === id);
 
-  if(index === -1){
+  const getCategory = await this.findOne(id);
+  await getCategory.destroy(id);
 
-    throw boom.notFound('Category not found');
-  }
-
-  this.categories.splice(index,1);
-  return { id };
+  return {id};
 }
 
 }

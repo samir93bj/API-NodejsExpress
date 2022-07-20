@@ -16,14 +16,9 @@ class ProductsService {
   //CREATE PRODUCT
   async create(data){
 
-    const newProduct = {
-      id: faker.datatype.uuid(),
-      ...data,
-      isBlock: false
-    }
+    const product = await models.Product.create(data);
+    return product;
 
-    this.products.push(newProduct);
-    return newProduct;
   }
 
   //GET PRODUCTS
