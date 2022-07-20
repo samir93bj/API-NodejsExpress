@@ -1,22 +1,17 @@
 const boom = require('@hapi/boom');
-const Pool = require('../libs/postgres.pool');
+const { models }  = require('../libs/sequalize');
 
 class usersService {
 
   constructor(){
-
-    this.pool = Pool;
-    this.pool.on('error', (err) => console.error(err))
 
   }
 
 
   //GET USER
   async find(){
-    const query = 'SELECT * FROM tasks';
-    const users = await this.pool.query(query);
-
-    return users.rows;
+    const users = await models.User.findAll();
+    return users;
   }
 
   //GET USER

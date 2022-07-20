@@ -1,38 +1,27 @@
-const faker = require('faker');
+const { models }  = require('../libs/sequalize');
 const boom = require('@hapi/boom');
 
 class CategoriesService {
 
   constructor(){
-    this.categories = [];
-    this.generate();
+
   }
 
 generate(){
 
-  const limit = 20;
-
-  for(var i=0; i<limit; i++){
-    this.categories.push({
-      id: faker.datatype.uuid(),
-      name: faker.commerce.department(),
-      image: faker.image.imageUrl(),
-      isBlock: faker.datatype.boolean()
-    });
-  }
 }
 
 //GET CATEGORIES
 async find(){
 
-  return this.categories;
-
+  const categories = await models.Category.findAll();
+  return categories;
 }
 
 //GET CATEGORY
 async findOne(id){
 
-  const category = await this.categories.find(item => item.id === id);
+  const category = await models.Category.findByPk(id);
 
   if(!category){
     throw boom.notFound('Category not found');
