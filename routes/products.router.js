@@ -47,7 +47,7 @@ router.get('/:id',
 //POST PRODUCT (ID)
 router.post('/',
   validatorHandler(createProductSchema, 'body'),
-  async (req, res) => {
+  async (req, res,next) => {
 
     try{
         const newProduct = await service.create(req.body);
@@ -57,9 +57,7 @@ router.post('/',
         });
     }
     catch(error){
-      res.status(404).json({
-        message: error.message
-      });
+      next(error)
     }
 
 });
@@ -106,8 +104,6 @@ async (req,res,next) => {
     }
 
 });
-
-
 
 module.exports = router;
 
