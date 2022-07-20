@@ -12,6 +12,9 @@ npm start //Modo producción
 docker-compose up -d postgres
 docker-compose up -d pgadmin
 
+docker-compose up -d mysql
+docker-compose up -d phpmyadmin
+
 --Connect pgAdmin
 docker ps => get 'CONTAINER ID'
 docker inspect 'CONTAINER ID'
