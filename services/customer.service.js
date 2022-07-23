@@ -9,7 +9,7 @@ class CustomerService {
   //GET CUSTOMERS
   async find(){
     const customers = await models.Customer.findAll({
-      include:['User']
+      include:['user']
     });
     return customers;
   }
@@ -28,7 +28,10 @@ class CustomerService {
   //CREATE CUSTOMER
   async create(data){
 
-    const customer = await models.Customer.create(data);
+    const customer = await models.Customer.create(data, {
+      include:['user']
+    });
+
     return customer;
   }
 

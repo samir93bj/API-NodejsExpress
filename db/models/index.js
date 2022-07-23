@@ -9,6 +9,7 @@ function setupModels(sequalize){
   Category.init(CategorySchema, Category.config(sequalize));
   Customer.init(CustomerSchema, Customer.config(sequalize));
 
+  User.associate(sequalize.models);
   Customer.associate(sequalize.models);
 }
 
