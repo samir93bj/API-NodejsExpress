@@ -57,7 +57,7 @@ async update(data, id){
 async detele(id){
 
   const getCategory = await this.findOne(id);
-  await getCategory.destroy(id);
+  await getCategory.destroy();
 
   return {id};
 }
