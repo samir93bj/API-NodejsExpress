@@ -7,7 +7,6 @@ class usersService {
 
   }
 
-
   //GET USER
   async find(){
     const users = await models.User.findAll({

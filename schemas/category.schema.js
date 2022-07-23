@@ -1,12 +1,9 @@
 //Schema o DTO (Data Transfer objects)
 const Joi = require('joi');
-
 //ID
 const id = Joi.number().integer();
-
 //NAME
 const name = Joi.string().min(3).max(15).messages();
-
 //IMAGE
 const image = Joi.string().uri();
 

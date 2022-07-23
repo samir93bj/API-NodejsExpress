@@ -11,6 +11,9 @@ function setupModels(sequalize){
 
   User.associate(sequalize.models);
   Customer.associate(sequalize.models);
+
+  Category.associate(sequalize.models);
+  Product.associate(sequalize.models);
 }
 
 

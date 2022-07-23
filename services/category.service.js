@@ -14,14 +14,14 @@ generate(){
 //GET CATEGORIES
 async find(){
 
-  const categories = await models.Category.findAll();
+  const categories = await models.Category.findAll({include:['product']});
   return categories;
 }
 
 //GET CATEGORY
 async findOne(id){
 
-  const category = await models.Category.findByPk(id);
+  const category = await models.Category.findByPk(id,{include:['product']});
 
   if(!category){
     throw boom.notFound('Category not found');
