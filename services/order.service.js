@@ -23,7 +23,9 @@ class orderService {
     const order = await models.Order.findByPk(id,{
       include:[{
         association: 'customer',
-        include:['user']}]
+        include:['user']},
+        'items'
+      ]
     })
 
     if(!order){
@@ -36,13 +38,17 @@ class orderService {
   //CREATE ORDER
   async create(data){
 
-    const newOrder = models.Order.create(data);
-
-    if(!order){
-      throw boom.notFound('Customer not found');
-    };
+    const newOrder = await models.Order.create(data);
 
     return newOrder;
+
+  }
+
+  //ADD ITEM
+  async addItem(data){
+
+    const newItem = await models.OrderProduct.create(data);
+    return newItem;
 
   }
 
