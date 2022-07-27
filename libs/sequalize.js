@@ -9,11 +9,19 @@ const PASSWORD = encodeURIComponent(config.dbPassword);
 const URI =`postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 //const URI =`mysql://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
-const sequelize =  new Sequelize (URI, {
-      dialect: 'postgres',
-      //dialect: 'mysql',
-      logging: true
-    });
+const options = {
+    dialect: 'postgres',
+    //dialect: 'mysql',
+    logging: config.isProd ? false : true,
+}
+
+if(config.isProd){
+  options.ssl = {
+    rejectUnauthorized : false
+  }
+}
+
+const sequelize =  new Sequelize (config.dbUrl, options);
     setupModels(sequelize);
 
 module.exports = sequelize;
