@@ -30,6 +30,18 @@ class usersService {
     return user;
   }
 
+ //GET USER-EMAIL
+ async findByEmail(email){
+
+  const user = await models.User.scope("withPassword").findOne({ where : { email }});
+
+    if(!user){
+      throw boom.notFound('User not found');
+    }
+
+  return user;
+}
+
   //CREATE USER
   async create(data){
 
