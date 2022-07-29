@@ -1,4 +1,5 @@
 const boom = require('@hapi/boom');
+const bcrypt = require('bcrypt');
 const { models }  = require('../libs/sequalize');
 
 class usersService {
@@ -9,14 +10,17 @@ class usersService {
 
   //GET USER
   async find(){
+
     const users = await models.User.findAll({
       include:['customer']
     });
+
     return users;
   }
 
   //GET USER
   async findOne(id){
+
     const user = await models.User.findByPk(id);
 
       if(!user){
@@ -28,7 +32,20 @@ class usersService {
 
   //CREATE USER
   async create(data){
-    const newUser = await models.User.create(data);
+
+    const email = data.email;
+    const password = await bcrypt.hash(data.password , 10);
+
+    const user = {
+      email,
+      password
+    }
+
+    const newUser = await models.User.create(user);
+
+    //Quitar del return el password del user => zequelize
+    delete newUser.dataValues.password;
+
     return newUser;
   }
 

@@ -1,4 +1,5 @@
 const { models } = require('./../libs/sequalize');
+const bcrypt = require('bcrypt');
 const boom = require('@hapi/boom');
 
 class CustomerService {
@@ -16,9 +17,7 @@ class CustomerService {
 
   //GET CUSTOMER
   async findOne(id){
-    const customer = await models.Customer.findByPk(id, {
-      include:['user','orders']
-    });
+    const customer = await models.Customer.findByPk(id);
 
     if(!customer){
       throw boom.notFound('Customer not found');
@@ -30,9 +29,21 @@ class CustomerService {
   //CREATE CUSTOMER
   async create(data){
 
-    const customer = await models.Customer.create(data, {
+    const passwordHash = await bcrypt.hash(data.user.password , 10);
+
+    const newData ={
+      ...data,
+      user: {
+        ...data.user,
+        password : passwordHash
+      }
+    }
+
+    const customer = await models.Customer.create(newData, {
       include:['user']
     });
+
+    delete customer.user.dataValues.password
 
     return customer;
   }
