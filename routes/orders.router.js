@@ -1,31 +1,32 @@
 const express = require('express');
 const orderService = require('../services/order.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const {addItemSchema, createOrderSchema, updateOrderSchema, getOrderSchema } = require('../schemas/order.schema');
+const {addItemSchema, updateOrderSchema, getOrderSchema } = require('../schemas/order.schema');
+const passport = require('passport');
 
 const router = express.Router();
 
 const service = new orderService();
 
-//GET USERS
+//GET ORDERS
 router.get('/',
   async(req,res,next) => {
 
     try{
       const orders = await service.find();
 
-
         res.status(200).json({
           message:"Orders List",
           orders
         });
+
     }catch(err){
       next(err);
     }
 
 });
 
-//GET USER
+//GET ORDER
 router.get('/:id',
   validatorHandler(getOrderSchema,'params'),
   async (req,res,next) => {
@@ -44,16 +45,15 @@ router.get('/:id',
       }
 })
 
-//POST USER
+//POST ORDER
 router.post('/',
-  validatorHandler(createOrderSchema,'body'),
+  passport.authenticate('jwt', {session: false}),
   async (req,res,next) => {
     try{
 
-      const data = req.body;
+      const data = { userId : req.user.sub };
 
       const order = await service.create(data);
-
 
         res.status(200).json({
           message:"Order created",
@@ -85,7 +85,7 @@ router.post('/add-item',
 
 })
 
-//PATCH USER
+//PATCH ORDER
 router.patch('/:id',
 validatorHandler(getOrderSchema,'params'),
 validatorHandler(updateOrderSchema,'body'),
@@ -108,7 +108,7 @@ validatorHandler(updateOrderSchema,'body'),
 
 })
 
-//DELETE USER
+//DELETE ORDER
 router.delete('/:id',
   validatorHandler(getOrderSchema,'params'),
   async (req,res,next) => {
