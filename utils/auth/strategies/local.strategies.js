@@ -11,26 +11,26 @@ const localStrategy = new Strategy({
 },
   async (username, password, done)=>{
 
-  try{
+    try{
 
-    const user = await service.findByEmail(username);
+      const user = await service.findByEmail(username);
 
-    if(!user){
-      done(boom.unauthorized(), false);
-    };
+      if(!user){
+        done(boom.unauthorized(), false);
+      };
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch){
-      done(boom.unauthorized(), false);
-    };
+      const isMatch = await bcrypt.compare(password, user.password);
+      if(!isMatch){
+        done(boom.unauthorized(), false);
+      };
 
-    //Eliminamos el password del user obtenido
-    delete user.dataValues.password;
+      //Eliminamos el password del user obtenido
+      delete user.dataValues.password;
 
-    done(null, user);
-  }catch{
-    done(error, false);
-  }
+      done(null, user);
+    }catch{
+      done(error, false);
+    }
 
 });
 

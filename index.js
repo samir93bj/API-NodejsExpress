@@ -26,15 +26,14 @@ const options = {
 };
 app.use(cors(options));
 
-//
-require('./utils/auth');
-app.use(passport.initialize());
-
 
 app.get('/',(req, res) => {
   res.send('Server on');
 });
 
+//
+require('./utils/auth');
+app.use(passport.initialize());
 
 routerApi(app);
 
