@@ -1,12 +1,11 @@
 const express = require('express');
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const { config } = require('./../config/config');
+const AuthService = require('./../services/auth.servece');
+
 const router = express.Router();
+const service = new AuthService();
 
-
-//GET USERS
-
+//LOGIN
 router.post('/login',
     passport.authenticate('local', {session: false}),
     async(req,res,next)=>{
@@ -14,21 +13,8 @@ router.post('/login',
       try{
         const user = req.user;
 
-        const jwtConfig = {
-          expiresIn: 60 * 60,
-        };
-
-        const payload = {
-          sub : user.id,
-          role: user.role
-        }
-
-        const token = jwt.sign(payload, config.JWT_SECRET, jwtConfig);
-
-        res.status(200).json({
-          user,
-          token
-        });
+        //Al ser sincrono podemos resolverlo directamente en el res
+        res.status(200).json(service.singToken(user));
 
       }
       catch(error){
@@ -37,11 +23,23 @@ router.post('/login',
     }
 );
 
-router.get('/', (req,res)=>{
-    res.status(200).json({
-      msg:'Router Get'
-    })
-  }
+//LOGIN
+router.post('/recovery',
+    async(req,res,next)=>{
+
+      try{
+        const { email } = req.body;
+        const resp = await service.sendMail(email);
+
+        res.status(200).json({
+          resp
+        });
+
+      }
+      catch(error){
+        next(error);
+      }
+    }
 );
 
 module.exports = router;

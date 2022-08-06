@@ -3,9 +3,9 @@ const boom = require('@hapi/boom');
 
 class CategoriesService {
 
-  constructor(){
+constructor(){
 
-  }
+}
 
 generate(){
 
