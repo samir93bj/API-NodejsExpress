@@ -1,7 +1,11 @@
 const express = require('express');
 const Customer = require('../services/customer.service');
-const router = express.Router();
+const validatorHandler = require('../middlewares/validator.handler');
+const { checkAdminRole, checkRoles }  = require('../middlewares/auth.handler');
+const {  createCustomerSchema, updateCustomerSchema, getCustomerchema } = require('../schemas/customer.schema');
+const passport = require('passport');
 
+const router = express.Router();
 const service = new Customer;
 
 //GET CUSTOMERS
@@ -43,6 +47,9 @@ router.get('/:id',
 
 //POST CUSTOMER
 router.post('/',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin'),
+  validatorHandler(createCustomerSchema,'body'),
   async(req,res,next)=>{
     try{
 
@@ -62,20 +69,24 @@ router.post('/',
 
 //PATCH CUSTOMER
 router.patch('/:id',
-async(req,res,next)=>{
-  try{
-    const id = req.params.id;
-    const data = req.body;
-    const customer = await service.patch(id,data);
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin','customer'),
+  validatorHandler(getCustomerchema,'params'),
+  validatorHandler(updateCustomerSchema,'body'),
+  async(req,res,next)=>{
+    try{
+      const id = req.params.id;
+      const data = req.body;
+      const customer = await service.patch(id,data);
 
-      res.status(200).json({
-        message:"Updated customer successfully",
-        customer
-      });
+        res.status(200).json({
+          message:"Updated customer successfully",
+          customer
+        });
 
-  }catch(err){
-    next(err)
-  }
+    }catch(err){
+      next(err)
+    }
 }
 );
 

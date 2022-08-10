@@ -52,6 +52,16 @@ class CustomerService {
   async patch(id, data){
 
     const customer = await this.findOne(id);
+
+    if(data.userId){
+      const user = await models.User.findByPk(data.userId);
+
+        if(!user){
+          throw boom.notFound('user not found');
+        }
+
+    }
+
     const customerUpdate = await customer.update(data);
 
     return customerUpdate;
