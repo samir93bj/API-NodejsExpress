@@ -33,6 +33,7 @@ class usersService {
  //GET USER-EMAIL
  async findByEmail(email){
 
+  //const user = await models.User.findOne({ where: { email } });
   const user = await models.User.scope("withPassword").findOne({ where : { email }});
 
     if(!user){
@@ -46,7 +47,7 @@ class usersService {
   async create(data){
 
     const email = data.email;
-    const password = await bcrypt.hash(data.password , 10);
+    const password = data.password;
 
     const user = {
       email,

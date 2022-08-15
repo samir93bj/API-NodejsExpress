@@ -35,7 +35,6 @@ router.get('/:id',
       const id = req.params.id;
       const order = await service.findOne(id);
 
-
         res.status(200).json({
           message:"Order Get",
           order

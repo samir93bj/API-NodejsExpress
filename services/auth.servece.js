@@ -23,6 +23,7 @@ async getUser(email, password){
     };
 
     const isMatch = await bcrypt.compare(password, user.password);
+
     if(!isMatch){
       throw boom.unauthorized();
     };

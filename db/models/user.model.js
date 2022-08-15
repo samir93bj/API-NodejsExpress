@@ -41,6 +41,7 @@ class User extends Model{
   }
 
   static config(sequelize){
+
     return {
       sequelize,
       tableName: USER_TABLE,
@@ -53,7 +54,7 @@ class User extends Model{
         },
       },
       defaultScope: {
-        attributes: { exclude: ['password'] },
+       attributes: { exclude: ['password'] },
       },
       scopes: {
         withPassword:{ attributes: {}, }
@@ -61,7 +62,5 @@ class User extends Model{
     }
   }
 }
-
-
 
 module.exports = {USER_TABLE , UserSchemna, User}
