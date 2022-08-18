@@ -65,20 +65,21 @@ class usersService {
   //UPDATE USER
   async update(id, data){
 
-    const getUser = await this.findOne(id);
+    const user = await models.User.findByPk(id);
 
-    if(!getUser){
+    if(!user){
         throw boom.notFound('User not found');
       }
-    const user = await getUser.update(data);
+    const rta = await user.update(data);
 
-    return user;
+    console.log(rta);
+    return rta;
   }
 
   //DELETE USER
   async delete(id){
 
-    const getUser = await this.findOne(id);
+    const getUser = await models.User.findOne(id);
 
     if(!getUser){
       throw boom.notFound('User not found');

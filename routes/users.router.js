@@ -98,6 +98,7 @@ router.patch('/:id',
 
 })
 
+
 //DELETE USER
 router.delete('/:id',
   passport.authenticate('jwt', {session: false}),

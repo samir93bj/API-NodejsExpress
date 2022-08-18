@@ -23,13 +23,34 @@ router.post('/login',
     }
 );
 
-//LOGIN
+//RESET PASSWORD
 router.post('/recovery',
     async(req,res,next)=>{
 
       try{
         const { email } = req.body;
-        const resp = await service.sendMail(email);
+        const resp = await service.sendRecovery(email);
+
+        res.status(200).json({
+          resp
+        });
+
+      }
+      catch(error){
+        next(error);
+      }
+    }
+);
+
+//CHANGE PASSWORD
+router.post('/change-password',
+  //TODO:Verificar JWT
+  //TODO:verificar new password schema
+  async(req,res,next)=>{
+
+      try{
+        const { token, newPassword } = req.body;
+        const resp = await service.changePassword( token, newPassword);
 
         res.status(200).json({
           resp
