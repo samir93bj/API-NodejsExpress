@@ -31,8 +31,8 @@ app.get('/',(req, res) => {
   res.send('Server on');
 });
 
-//
-require('./utils/auth');
+
+//require('./utils/auth');
 //app.use(passport.initialize());
 
 routerApi(app);
