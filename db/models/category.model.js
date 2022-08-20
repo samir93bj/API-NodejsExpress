@@ -23,7 +23,8 @@ const CategorySchema = {
     type: DataTypes.DATE,
     field:'create_at',
     defaultValue: Sequelize.NOW
-  }
+  },
+
 };
 
 //EXTENDS MODEL - SEQUALIZE

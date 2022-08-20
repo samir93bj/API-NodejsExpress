@@ -23,3 +23,5 @@ docker inspect 'CONTAINER ID'
 --CORRER MIGRACIONES EN HEROKU 
 heroku run npx sequelize-cli db:migrate
 heroku run npx sequelize-cli db:migrate:undo
+heroku run npx sequelize-cli db:migrate:undo:all
+
