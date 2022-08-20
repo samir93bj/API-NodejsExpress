@@ -30,6 +30,7 @@ const OrderProductSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
   amount: {
     allowNull: false,
@@ -40,7 +41,9 @@ const OrderProductSchema = {
     type: DataTypes.DATE,
     field:'create_at',
     defaultValue: Sequelize.NOW
-  }
+  },
+  onUpdate: 'CASCADE',
+  onDelete: 'SET NULL'
 };
 
 //EXTENDS MODEL - SEQUALIZE

@@ -41,7 +41,7 @@ const CustomerSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+    onDelete: 'SET NULL'
   }
 };
 
