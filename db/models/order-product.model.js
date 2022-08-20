@@ -19,7 +19,8 @@ const OrderProductSchema = {
       model: ORDER_TABLE,
       key: 'id'
     },
-    onUpdate: 'CASCADE'
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
   productId:{
     field:'product_id',
