@@ -4,7 +4,7 @@ const express = require('express');
 const routerApi = require('./routes');
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler} = require('./middlewares/error.handler');
 
-const passport = require('passport');
+//const passport = require('passport');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,7 +33,7 @@ app.get('/',(req, res) => {
 
 //
 require('./utils/auth');
-app.use(passport.initialize());
+//app.use(passport.initialize());
 
 routerApi(app);
 
