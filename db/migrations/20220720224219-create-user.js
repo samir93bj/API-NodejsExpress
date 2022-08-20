@@ -1,5 +1,3 @@
-'use strict';
-
 const {UserSchemna , USER_TABLE} = require('./../models/user.model');
 const bcrypt = require('bcrypt');
 
