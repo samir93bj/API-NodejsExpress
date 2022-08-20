@@ -18,3 +18,8 @@ docker-compose up -d phpmyadmin
 --Connect pgAdmin
 docker ps => get 'CONTAINER ID'
 docker inspect 'CONTAINER ID'
+
+
+--CORRER MIGRACIONES EN HEROKU 
+heroku run npx sequelize-cli db:migrate
+heroku run npx sequelize-cli db:migrate:undo
