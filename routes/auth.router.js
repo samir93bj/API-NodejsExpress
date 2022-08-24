@@ -1,6 +1,8 @@
 const express = require('express');
 const passport = require('passport');
 const AuthService = require('./../services/auth.servece');
+const validatorHandler = require('../middlewares/validator.handler');
+const {changePassword } = require('../schemas/user.schema');
 
 const router = express.Router();
 const service = new AuthService();
@@ -44,8 +46,8 @@ router.post('/recovery',
 
 //CHANGE PASSWORD
 router.post('/change-password',
-  //TODO:Verificar JWT
-  //TODO:verificar new password schema
+  passport.authenticate('jwt', {session: false}),
+  validatorHandler(changePassword,'body'),
   async(req,res,next)=>{
 
       try{
