@@ -10,6 +10,8 @@ const service = new Customer;
 
 //GET CUSTOMERS
 router.get('/',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin','customer'),
   async(req,res,next)=>{
     try{
 
@@ -92,7 +94,8 @@ router.patch('/:id',
 
 //DELETE CUSTOMER
 router.delete('/:id',
-
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin'),
   async(req,res,next)=>{
     try{
       const id = req.params.id;

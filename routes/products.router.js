@@ -1,7 +1,9 @@
 const express = require('express');
 const ProductsService = require('../services/product.service');
 const validatorHandler = require('../middlewares/validator.handler');
+const { checkRoles }  = require('../middlewares/auth.handler');
 const {  createProductSchema, updateProductSchema, getProductSchema,queryProductSchema} = require('../schemas/product.schema');
+const passport = require('passport');
 
 //router
 const router = express.Router();
@@ -20,7 +22,6 @@ router.get('/',
         products
       });
 });
-
 
 //GET FILTER
 router.get('/filter',(req, res) => {
@@ -49,6 +50,8 @@ router.get('/:id',
 
 //POST PRODUCT (ID)
 router.post('/',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin'),
   validatorHandler(createProductSchema, 'body'),
   async (req, res,next) => {
 
@@ -67,6 +70,8 @@ router.post('/',
 
 //PATCH PRODUCT (ID)
 router.patch('/:id',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin','customer'),
   validatorHandler(getProductSchema, 'params'),
   validatorHandler(updateProductSchema, 'body'),
   async (req,res,next) => {
@@ -90,23 +95,25 @@ router.patch('/:id',
 
 //DELETE PRODUCT
 router.delete('/:id',
-validatorHandler(getProductSchema, 'params'),
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin'),
 
-async (req,res,next) => {
+  validatorHandler(getProductSchema, 'params'),
 
-  try{
-    const id = req.params.id;
-    const productDeleted = await service.delete(id);
+  async (req,res,next) => {
 
-      res.status(200).json({
-        message:"Product Deleted",
-        productDeleted
-      });
-    }catch(err){
-      next(err);
-    }
+    try{
+      const id = req.params.id;
+      const productDeleted = await service.delete(id);
 
-});
+        res.status(200).json({
+          message:"Product Deleted",
+          productDeleted
+        });
+      }catch(err){
+        next(err);
+      }
+  });
 
 module.exports = router;
 

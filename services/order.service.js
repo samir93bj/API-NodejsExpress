@@ -38,7 +38,6 @@ class orderService {
   //GET MY-ORDER
   async findByUser(user){
 
-    console.log(user);
     const orders = models.Order.findAll({
       where:{'$customer.user.id$':user},
       include:[{

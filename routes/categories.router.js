@@ -1,7 +1,7 @@
 const express = require('express');
 const CategoriesService = require('../services/category.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { checkAdminRole, checkRoles }  = require('../middlewares/auth.handler');
+const { checkRoles }  = require('../middlewares/auth.handler');
 const {  createCategorySchema, updateCategorySchema, getCategorySchema } = require('../schemas/category.schema');
 const passport = require('passport');
 
@@ -72,23 +72,24 @@ router.post('/',
 router.patch('/:id',
   passport.authenticate('jwt', {session: false}),
   checkRoles('admin','customer'),
+
   validatorHandler(getCategorySchema,'params'),
   validatorHandler(updateCategorySchema,'body'),
+
   async(req,res,next)=>{
-    try{
-      const data = req.body;
-      const id  = req.params.id;
-      const category = await service.update(data, id);
+      try{
+        const data = req.body;
+        const id  = req.params.id;
+        const category = await service.update(data, id);
 
-      res.status(201).json({
-        message: "Category updated",
-        category
-      });
+        res.status(201).json({
+          message: "Category updated",
+          category
+        });
 
-    }catch(err){
-      next(err);
-    }
-
+      }catch(err){
+        next(err);
+      }
   }
 );
 
