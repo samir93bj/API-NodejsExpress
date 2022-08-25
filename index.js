@@ -3,6 +3,7 @@ const cors = require('cors')
 const express = require('express');
 const routerApi = require('./routes');
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler} = require('./middlewares/error.handler');
+const fileUpload = require('express-fileupload');
 
 const passport = require('passport');
 
@@ -25,6 +26,13 @@ const options = {
     }
 };
 app.use(cors(options));
+
+   //FILE UPLOADS
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/',
+    createParentPath : true
+}));
 
 
 app.get('/',(req, res) => {

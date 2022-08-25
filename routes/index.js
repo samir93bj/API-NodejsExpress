@@ -8,6 +8,7 @@ const orderRouter = require('./orders.router');
 const customerRouter = require('./customer.router');
 const authRouter = require('./auth.router');
 const profileRouter = require('./profile.router');
+const uploadRouter = require('./upload.router');
 
 function routerApi (app){
   app.use('/api/v1', router);
@@ -18,6 +19,7 @@ function routerApi (app){
   router.use('/orders',orderRouter);
   router.use('/customers',customerRouter);
   router.use('/profile',profileRouter);
+  router.use('/uploads',uploadRouter);
 }
 
 module.exports = routerApi;
