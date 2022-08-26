@@ -3,7 +3,7 @@ const boom = require('@hapi/boom');
 const Joi = require('joi');
 
 const id = Joi.number().integer();
-const collection = Joi.string().valid('users','categories','products');
+const collection = Joi.string().valid('categories','products');
 
 //VALIDATORS EXTENSIONS
 function validateExtension(file) {
