@@ -1,7 +1,11 @@
 const { v4: uuidv4 } = require('uuid');
 const boom = require('@hapi/boom');
+const Joi = require('joi');
 
+const id = Joi.number().integer();
+const collection = Joi.string().valid('users','categories','products');
 
+//VALIDATORS EXTENSIONS
 function validateExtension(file) {
     extensionesValidas = ['png', 'jpg', 'gif', 'jpeg'];
 
@@ -18,5 +22,10 @@ function validateExtension(file) {
     return nameTemp;
 };
 
+//VALIDATORS COLLECTIONS
+const updateCollectionSchema = Joi.object({
+  collection: collection.required(),
+  id : id.required()
+});
 
-module.exports = { validateExtension };
+module.exports = { validateExtension, updateCollectionSchema };

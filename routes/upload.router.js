@@ -3,7 +3,7 @@ const validatorHandler = require('../middlewares/validator.handler');
 const passport = require('passport');
 const { checkRoles }  = require('../middlewares/auth.handler');
 const { validateFileUpload }  = require('../middlewares/file.handler');
-const { validateExtension} = require('../schemas/upload.schema');
+const { validateExtension, updateCollectionSchema} = require('../schemas/upload.schema');
 const uploadService = require('../services/upload.service');
 
 //router
@@ -34,7 +34,27 @@ router.post('/',
 });
 
 //PUT
+router.put('/:collection/:id',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin','customers'),
+  validatorHandler(updateCollectionSchema , 'params'),
+  async(req,res,next)=>{
 
+    try{
+      const id = req.params.id;
+      const collection = req.params.collection;
+
+      const resp = await service.uploadCloudinaryService(id, collection);
+
+      res.status(200).json({
+        msg:'File updated',
+        resp
+      });
+
+    }catch(err){
+      next(err);
+    }
+});
 
 //DELETE
 
