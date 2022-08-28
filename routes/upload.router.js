@@ -58,6 +58,31 @@ router.put('/:collection/:id',
     }
 });
 
+//PUT
+router.put('/cloudinary/:collection/:id',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin','customers'),
+  validateFileUpload,
+  validatorHandler(updateCollectionSchema , 'params'),
+  async(req,res,next)=>{
+
+    try{
+      const id = req.params.id;
+      const collection = req.params.collection;
+
+      const nameFile = await validateExtension(req.files.file);
+      const resp = await service.uploadCloudinaryService(id, collection, req.files.file);
+
+      res.status(200).json({
+        msg:'File updated',
+        resp
+      });
+
+    }catch(err){
+      next(err);
+    }
+});
+
 //DELETE
 
 

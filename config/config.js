@@ -13,7 +13,8 @@ const config = {
   apiKey       : process.env.API_KEY,
   JWT_SECRET   : process.env.JWT_SECRET,
   emailUser    : process.env.EMAIL_USER,
-  emailPassword: process.env.EMAIL_PASSWORD
+  emailPassword: process.env.EMAIL_PASSWORD,
+  cloudinaryUrl: process.env.CLOUDINARY_URL
 }
 
 module.exports =  { config };

@@ -3,6 +3,10 @@ const { models }  = require('../libs/sequalize');
 const boom = require('@hapi/boom');
 const fs = require('fs');
 
+// Require the Cloudinary library
+const cloudinary = require('cloudinary').v2;
+const config = require('../config/config');
+
 //Require services
 const UserService = require('../services/user.service');
 const CategoryService = require('../services/category.service');
@@ -20,7 +24,7 @@ class uploadService{
   }
 
 //UPLOAD FILE TO SERVER
- async uploadService(file ,nameFile, folder =''){
+async uploadService(file ,nameFile, folder =''){
 
   const uploadPath = path.join( __dirname , '../uploads/',folder, nameFile);
 
@@ -29,11 +33,32 @@ class uploadService{
     return nameFile;
  }
 
+//DELETE FILE DUPLICATE
+async deleteFileDuplicate(collection,nameImg){
+
+    //Hay q borar la imagen del server
+    const pathImagen = path.join(__dirname,'../uploads', collection, nameImg);
+
+    //Si la imagen existe la va a borrar
+    if( fs.existsSync(pathImagen)){
+      fs.unlinkSync(pathImagen);
+    }
+
+}
+
+//DELETE FILE CLOUDINARY
+async deleteFileDuplicateCloudinary(nameFile){
+    const nombreArr = nameFile.split('/');
+    const nombre = nombreArr[nombreArr.length - 1];
+    const [public_id] = nombre.split('.');
+    cloudinary.uploader.destroy( public_id );
+}
 
 //UPLOAD FILE PUT
 async uploadServicePut(id,collection, file ,nameFile){
     let model;
 
+    //SWITCH COLLECTIONS
     switch(collection){
 
       case 'users':
@@ -41,6 +66,7 @@ async uploadServicePut(id,collection, file ,nameFile){
       break;
 
       case 'categories':
+
         model = await categoryService.findOne(id);
       break;
 
@@ -49,13 +75,22 @@ async uploadServicePut(id,collection, file ,nameFile){
       break;
     }
 
+    //VERIFY FILE EXIST
+    if(model.image){
+      await this.deleteFileDuplicate(collection,model.image);
+    }
+
     const fileName = await this.uploadService(file,nameFile, collection);
-    return fileName;
+    model.image = fileName;
+
+    await model.save();
+
+    return model;
 
 }
 
  //UPLOAD FILE TO CLOUDINARY SERVER
-async uploadCloudinaryService(id, collection){
+async uploadCloudinaryService(id, collection, file){
 
   let model;
 
@@ -74,7 +109,17 @@ async uploadCloudinaryService(id, collection){
       break;
     }
 
+    //VERIFY FILE EXIST
+    if(model.image){
+      await this.deleteFileDuplicateCloudinary(model.image);
+    }
 
+    const { tempFilePath } = file;
+    const { secure_url } = await cloudinary.uploader.upload( tempFilePath );
+
+    model.image = secure_url;
+
+    await model.save();
 
     return model;
  }
