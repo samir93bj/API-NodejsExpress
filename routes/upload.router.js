@@ -37,6 +37,7 @@ router.post('/',
 router.put('/:collection/:id',
   passport.authenticate('jwt', {session: false}),
   checkRoles('admin','customers'),
+  validateFileUpload,
   validatorHandler(updateCollectionSchema , 'params'),
   async(req,res,next)=>{
 
@@ -44,7 +45,8 @@ router.put('/:collection/:id',
       const id = req.params.id;
       const collection = req.params.collection;
 
-      const resp = await service.uploadCloudinaryService(id, collection);
+      const nameFile = await validateExtension(req.files.file);
+      const resp = await service.uploadServicePut(id, collection, req.files.file, nameFile);
 
       res.status(200).json({
         msg:'File updated',
@@ -60,7 +62,3 @@ router.put('/:collection/:id',
 
 
 module.exports = router;
-
-
-
-
