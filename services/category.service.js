@@ -43,6 +43,14 @@ async create(data){
   return category;
 }
 
+//CRETE MASSIVE
+async bulkCreate(data){
+
+  const bulkData = await models.Category.bulkCreate(data);
+  return bulkData;
+
+}
+
 //UPDATE CATEGORY
 async update(data, id){
 

@@ -1,4 +1,6 @@
 const Joi = require('joi');
+const boom = require('@hapi/boom');
+const { v4: uuidv4 } = require('uuid');
 
 const collection = Joi.string().valid('users','categories','products','orders');
 
@@ -19,11 +21,14 @@ function validateExtension(file) {
   return nameTemp;
 };
 
+
 //VALIDATORS COLLECTIONS
-const createCollectionSchema = Joi.object({
+const updateCollectionSchema = Joi.object({
   collection: collection.required(),
 });
 
+
 module.exports = {
-  createCollectionSchema
+  updateCollectionSchema,
+  validateExtension
 }

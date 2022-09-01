@@ -48,6 +48,14 @@ class CustomerService {
     return customer;
   }
 
+  //CRETE MASSIVE
+  async bulkCreate(data){
+
+    const bulkData = await models.Customer.bulkCreate(data);
+    return bulkData;
+
+  }
+
   //PATCH CUSTOMER
   async patch(id, data){
 

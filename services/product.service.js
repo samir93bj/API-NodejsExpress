@@ -14,13 +14,21 @@ class ProductsService {
 
   }
 
-  //CREATE PRODUCT
+//CREATE PRODUCT
   async create(data){
 
     const product = await models.Product.create(data);
     return product;
 
   }
+
+//CRETE MASSIVE
+async bulkCreate(data){
+
+  const bulkData = await models.Product.bulkCreate(data);
+  return bulkData;
+
+}
 
   //GET PRODUCTS
   async find(data){

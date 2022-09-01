@@ -62,6 +62,14 @@ class usersService {
     return newUser;
   }
 
+  //CRETE MASSIVE
+  async bulkCreate(data){
+
+    const bulkData = await models.User.bulkCreate(data);
+    return bulkData;
+
+  }
+
   //UPDATE USER
   async update(id, data){
 
