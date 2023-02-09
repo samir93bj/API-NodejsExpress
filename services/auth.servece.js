@@ -97,7 +97,7 @@ async changePassword(token, newPassword){
 
     return { message: 'password changed' };
 
-  }catch{
+  } catch (err){
     throw boom.unauthorized();
   }
 

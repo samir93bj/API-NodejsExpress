@@ -35,7 +35,7 @@ function ormErrorHandler(err, req, res , next){
     })
 
   }else{
-      next(err);
+      next();
   }
 }
 
