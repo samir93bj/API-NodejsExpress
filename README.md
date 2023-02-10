@@ -1,5 +1,5 @@
 # API REST -Nodejs Express
-API REST - Node js Express // Platzi
+API REST - Node js Expres
 
 Server con ExpressJS
 Este es un server hecho con ExpressJS.
