@@ -22,7 +22,7 @@ class orderService {
     })
 
     if (!order) {
-      throw boom.notFound('Customer not found')
+      throw boom.notFound('Order not found')
     };
 
     return order
@@ -46,7 +46,6 @@ class orderService {
   // CREATE ORDER
   async create (data) {
     const customer = await models.Customer.findOne({ where: { '$user.id$': data.userId }, include: ['user'] })
-
     if (!customer) {
       throw boom.badRequest('Customer not found')
     }
@@ -58,6 +57,18 @@ class orderService {
 
   // ADD ITEM
   async addItem (data) {
+    const order = await models.Order.findByPk(data.orderId)
+
+    if (!order) {
+      throw boom.notFound('Order not found')
+    }
+
+    const product = await models.Product.findByPk(data.productId)
+
+    if (!product) {
+      throw boom.notFound('Product not found')
+    }
+
     const newItem = await models.OrderProduct.create(data)
     return newItem
   }

@@ -1,5 +1,4 @@
 const { models } = require('./../libs/sequalize')
-const bcrypt = require('bcrypt')
 const boom = require('@hapi/boom')
 
 class CustomerService {
@@ -24,13 +23,11 @@ class CustomerService {
 
   // CREATE CUSTOMER
   async create (data) {
-    const passwordHash = await bcrypt.hash(data.user.password, 10)
-
     const newData = {
       ...data,
       user: {
         ...data.user,
-        password: passwordHash
+        password: data.user.password
       }
     }
 

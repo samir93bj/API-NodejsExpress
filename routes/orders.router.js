@@ -55,7 +55,6 @@ router.post('/',
   async (req, res, next) => {
     try {
       const data = { userId: req.user.sub }
-
       const order = await service.create(data)
 
       res.status(200).json({
@@ -71,9 +70,7 @@ router.post('/',
 router.post('/add-item',
   passport.authenticate('jwt', { session: false }),
   checkRoles('admin', 'customer'),
-
   validatorHandler(addItemSchema, 'body'),
-
   async (req, res, next) => {
     try {
       const data = req.body
