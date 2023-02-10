@@ -61,7 +61,7 @@
     "xlsx": "^0.18.5"
   },
   "lint-staged": {
-    "*.(js)": "npm run lint-fix"
+    "*.(js)": "npm run lint:fix"
   },
   "engines": {
     "node": "14.15.4"
