@@ -1,63 +1,61 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
-const { CATEGORY_TABLE } = require('../models/category.model');
+const { Model, DataTypes, Sequelize } = require('sequelize')
+const { CATEGORY_TABLE } = require('../models/category.model')
 
-const PRODUCT_TABLE = 'products';
+const PRODUCT_TABLE = 'products'
 
 const ProductSchema = {
-  id:{
+  id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  name:{
+  name: {
     allowNull: false,
     type: DataTypes.STRING,
     unique: true
   },
-  price:{
+  price: {
     allowNull: false,
-    type: DataTypes.FLOAT,
+    type: DataTypes.FLOAT
   },
-  image:{
+  image: {
     allowNull: true,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING
   },
-  createdAt:{
+  createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field:'create_at',
+    field: 'create_at',
     defaultValue: Sequelize.NOW
   },
-  categoryId:{
-    field:'category_id',
-    allowNull:true,
-    type:DataTypes.INTEGER,
-    references:{
+  categoryId: {
+    field: 'category_id',
+    allowNull: true,
+    type: DataTypes.INTEGER,
+    references: {
       model: CATEGORY_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   }
-};
+}
 
-//EXTENDS MODEL - SEQUALIZE
-class Product extends Model{
-
-  static associate(models) {
-    this.belongsTo(models.Category, {as:'category',foreignKey:'categoryId'});
+// EXTENDS MODEL - SEQUALIZE
+class Product extends Model {
+  static associate (models) {
+    this.belongsTo(models.Category, { as: 'category', foreignKey: 'categoryId' })
   }
 
-  static config (sequelize){
+  static config (sequelize) {
     return {
       sequelize,
-      tableName : PRODUCT_TABLE,
+      tableName: PRODUCT_TABLE,
       modelName: 'Product',
       timestamps: false
     }
   }
 }
 
-
-module.exports = {PRODUCT_TABLE , ProductSchema, Product}
+module.exports = { PRODUCT_TABLE, ProductSchema, Product }

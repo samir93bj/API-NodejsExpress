@@ -1,101 +1,87 @@
-const boom = require('@hapi/boom');
-const bcrypt = require('bcrypt');
-const { models }  = require('../libs/sequalize');
+const boom = require('@hapi/boom')
+const { models } = require('../libs/sequalize')
 
 class usersService {
-
-  constructor(){
-
-  }
-
-  //GET USER
-  async find(){
-
+  // GET USER
+  async find () {
     const users = await models.User.findAll({
-      include:['customer']
-    });
+      include: ['customer']
+    })
 
-    return users;
+    return users
   }
 
-  //GET USER
-  async findOne(id){
+  // GET USER
+  async findOne (id) {
+    const user = await models.User.findByPk(id)
 
-    const user = await models.User.findByPk(id);
-
-      if(!user){
-        throw boom.notFound('User not found');
-      }
-
-    return user;
-  }
-
- //GET USER-EMAIL
- async findByEmail(email){
-
-  //const user = await models.User.findOne({ where: { email } });
-  const user = await models.User.scope("withPassword").findOne({ where : { email }});
-
-    if(!user){
-      throw boom.notFound('User not found');
+    if (!user) {
+      throw boom.notFound('User not found')
     }
 
-  return user;
-}
+    return user
+  }
 
-  //CREATE USER
-  async create(data){
+  // GET USER-EMAIL
+  async findByEmail (email) {
+  // const user = await models.User.findOne({ where: { email } });
+    const user = await models.User.scope('withPassword').findOne({ where: { email } })
 
-    const email = data.email;
-    const password = data.password;
+    if (!user) {
+      throw boom.notFound('User not found')
+    }
+
+    return user
+  }
+
+  // CREATE USER
+  async create (data) {
+    const email = data.email
+    const password = data.password
 
     const user = {
       email,
       password
     }
 
-    const newUser = await models.User.create(user);
+    const newUser = await models.User.create(user)
 
-    //Quitar del return el password del user => zequelize
-    delete newUser.dataValues.password;
+    // Quitar del return el password del user => zequelize
+    delete newUser.dataValues.password
 
-    return newUser;
+    return newUser
   }
 
-  //CRETE MASSIVE
-  async bulkCreate(data){
-
-    const bulkData = await models.User.bulkCreate(data);
-    return bulkData;
-
+  // CRETE MASSIVE
+  async bulkCreate (data) {
+    const bulkData = await models.User.bulkCreate(data)
+    return bulkData
   }
 
-  //UPDATE USER
-  async update(id, data){
+  // UPDATE USER
+  async update (id, data) {
+    const user = await models.User.findByPk(id)
 
-    const user = await models.User.findByPk(id);
+    if (!user) {
+      throw boom.notFound('User not found')
+    }
+    const rta = await user.update(data)
 
-    if(!user){
-        throw boom.notFound('User not found');
-      }
-    const rta = await user.update(data);
-
-    console.log(rta);
-    return rta;
+    console.log(rta)
+    return rta
   }
 
-  //DELETE USER
-  async delete(id){
+  // DELETE USER
+  async delete (id) {
+    const getUser = await models.User.findOne(id)
 
-    const getUser = await models.User.findOne(id);
-
-    if(!getUser){
-      throw boom.notFound('User not found');
+    if (!getUser) {
+      throw boom.notFound('User not found')
     }
 
-    await getUser.destroy(id);
-    return  id;
+    await getUser.destroy(id)
+    return id
   }
 }
 
-module.exports = usersService;
+module.exports = usersService

@@ -1,66 +1,65 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
-const {USER_TABLE} = require('./user.model');
+const { Model, DataTypes, Sequelize } = require('sequelize')
+const { USER_TABLE } = require('./user.model')
 
-const CUSTOMER_TABLE = 'customers';
+const CUSTOMER_TABLE = 'customers'
 
 const CustomerSchema = {
-  id:{
+  id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  name:{
+  name: {
     allowNull: false,
     type: DataTypes.STRING,
     unique: false
   },
-  lastName:{
+  lastName: {
     allowNull: false,
-    field:'last_name',
+    field: 'last_name',
     type: DataTypes.STRING,
     unique: false
   },
-  phone:{
-    allowNull:true,
-    type:DataTypes.STRING,
+  phone: {
+    allowNull: true,
+    type: DataTypes.STRING
   },
-  createdAt:{
+  createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field:'create_at',
+    field: 'create_at',
     defaultValue: Sequelize.NOW
   },
-  userId:{
-    field:'user_id',
-    allowNull:false,
-    type:DataTypes.INTEGER,
-    unique:true,
-    references:{
+  userId: {
+    field: 'user_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    unique: true,
+    references: {
       model: USER_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   }
-};
+}
 
-//EXTENDS MODEL - SEQUALIZE
-class Customer extends Model{
-
-  static associate(models) {
-    this.belongsTo(models.User, {as: 'user', foreignKey:'userId'});
-    this.hasMany(models.Order, {as: 'orders', foreignKey:'customerId'});
+// EXTENDS MODEL - SEQUALIZE
+class Customer extends Model {
+  static associate (models) {
+    this.belongsTo(models.User, { as: 'user', foreignKey: 'userId' })
+    this.hasMany(models.Order, { as: 'orders', foreignKey: 'customerId' })
   }
 
-  static config (sequelize){
+  static config (sequelize) {
     return {
       sequelize,
-      tableName : CUSTOMER_TABLE,
+      tableName: CUSTOMER_TABLE,
       modelName: 'Customer',
       timestamps: false
     }
   }
 }
 
-module.exports = {CUSTOMER_TABLE , CustomerSchema, Customer}
+module.exports = { CUSTOMER_TABLE, CustomerSchema, Customer }

@@ -1,115 +1,107 @@
-const express = require('express');
-const Customer = require('../services/customer.service');
-const validatorHandler = require('../middlewares/validator.handler');
-const { checkAdminRole, checkRoles }  = require('../middlewares/auth.handler');
-const {  createCustomerSchema, updateCustomerSchema, getCustomerchema } = require('../schemas/customer.schema');
-const passport = require('passport');
+const express = require('express')
+const Customer = require('../services/customer.service')
+const validatorHandler = require('../middlewares/validator.handler')
+const { checkRoles } = require('../middlewares/auth.handler')
+const { createCustomerSchema, updateCustomerSchema, getCustomerchema } = require('../schemas/customer.schema')
+const passport = require('passport')
 
-const router = express.Router();
-const service = new Customer;
+const router = express.Router()
+const service = new Customer()
 
-//GET CUSTOMERS
+// GET CUSTOMERS
 router.get('/',
-  passport.authenticate('jwt', {session: false}),
-  checkRoles('admin','customer'),
-  async(req,res,next)=>{
-    try{
-
-      const customer = await service.find();
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin', 'customer'),
+  async (req, res, next) => {
+    try {
+      const customer = await service.find()
 
       res.status(200).json({
-        message:"Customers",
+        message: 'Customers',
         customer
-      });
-
-    }catch(err){
+      })
+    } catch (err) {
       next(err)
     }
   }
-);
+)
 
-//GET CUSTOMER
+// GET CUSTOMER
 router.get('/:id',
-  async(req,res,next)=>{
-    try{
-
-      const id = req.params.id;
-      const customer = await service.findOne(id);
+  async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const customer = await service.findOne(id)
 
       res.status(200).json({
-        message:"Customers",
+        message: 'Customers',
         customer
-      });
-
-    }catch(err){
+      })
+    } catch (err) {
       next(err)
     }
   }
-);
+)
 
-//POST CUSTOMER
+// POST CUSTOMER
 router.post('/',
-  passport.authenticate('jwt', {session: false}),
+  passport.authenticate('jwt', { session: false }),
   checkRoles('admin'),
-  validatorHandler(createCustomerSchema,'body'),
-  async(req,res,next)=>{
-    try{
-
-      const data = req.body;
-      const customer = await service.create(data);
+  validatorHandler(createCustomerSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const data = req.body
+      const customer = await service.create(data)
 
       res.status(200).json({
-        message:"Created Customer successfully",
+        message: 'Created Customer successfully',
         customer
-      });
-
-    }catch(err){
+      })
+    } catch (err) {
       next(err)
     }
   }
-);
+)
 
-//PATCH CUSTOMER
+// PATCH CUSTOMER
 router.patch('/:id',
-  passport.authenticate('jwt', {session: false}),
-  checkRoles('admin','customer'),
-  validatorHandler(getCustomerchema,'params'),
-  validatorHandler(updateCustomerSchema,'body'),
-  async(req,res,next)=>{
-    try{
-      const id = req.params.id;
-      const data = req.body;
-      const customer = await service.patch(id,data);
-
-        res.status(200).json({
-          message:"Updated customer successfully",
-          customer
-        });
-
-    }catch(err){
-      next(err)
-    }
-}
-);
-
-//DELETE CUSTOMER
-router.delete('/:id',
-  passport.authenticate('jwt', {session: false}),
-  checkRoles('admin'),
-  async(req,res,next)=>{
-    try{
-      const id = req.params.id;
-      const customer = await service.delete(id);
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin', 'customer'),
+  validatorHandler(getCustomerchema, 'params'),
+  validatorHandler(updateCustomerSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const data = req.body
+      const customer = await service.patch(id, data)
 
       res.status(200).json({
-        message:"Delete success",
+        message: 'Updated customer successfully',
         customer
-      });
-
-    }catch(err){
+      })
+    } catch (err) {
       next(err)
     }
   }
-);
+)
 
-module.exports = router;
+// DELETE CUSTOMER
+router.delete('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
+  async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const customer = await service.delete(id)
+
+      res.status(200).json({
+        message: 'Delete success',
+        customer
+      })
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+
+module.exports = router

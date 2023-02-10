@@ -1,52 +1,50 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
-const bcrypt = require('bcrypt');
+const { Model, DataTypes, Sequelize } = require('sequelize')
+const bcrypt = require('bcrypt')
 
-const USER_TABLE = 'users';
+const USER_TABLE = 'users'
 
 const UserSchemna = {
-  id:{
+  id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  email:{
+  email: {
     allowNull: false,
     type: DataTypes.STRING,
     unique: true
   },
-  password:{
+  password: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING
   },
-  recoveryToken:{
+  recoveryToken: {
     field: 'recovery_token',
     allowNull: true,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING
   },
-  role:{
+  role: {
     allowNull: false,
     type: DataTypes.STRING,
     defaultValue: 'customer'
   },
-  createdAt:{
+  createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field:'create_at',
+    field: 'create_at',
     defaultValue: Sequelize.NOW
   }
-};
+}
 
-//EXTENDS MODEL - SEQUALIZE
+// EXTENDS MODEL - SEQUALIZE
 
-class User extends Model{
-
-  static associate(models) {
-    this.hasOne(models.Customer,{as:'customer',foreignKey:'userId'});
+class User extends Model {
+  static associate (models) {
+    this.hasOne(models.Customer, { as: 'customer', foreignKey: 'userId' })
   }
 
-  static config(sequelize){
-
+  static config (sequelize) {
     return {
       sequelize,
       tableName: USER_TABLE,
@@ -54,18 +52,18 @@ class User extends Model{
       timestamps: false,
       hooks: {
         beforeCreate: async (user) => {
-          const password = await bcrypt.hash(user.password, 10);
-          user.password = password;
-        },
+          const password = await bcrypt.hash(user.password, 10)
+          user.password = password
+        }
       },
       defaultScope: {
-       attributes: { exclude: ['password'] },
+        attributes: { exclude: ['password'] }
       },
       scopes: {
-        withPassword:{ attributes: {}, }
-      },
+        withPassword: { attributes: {} }
+      }
     }
   }
 }
 
-module.exports = {USER_TABLE , UserSchemna, User}
+module.exports = { USER_TABLE, UserSchemna, User }

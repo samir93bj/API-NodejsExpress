@@ -1,32 +1,27 @@
-const express = require('express');
-const ProductsService = require('../services/order.service');
-const passport = require('passport');
+const express = require('express')
+const ProductsService = require('../services/order.service')
+const passport = require('passport')
 
-//router
-const router = express.Router();
+// router
+const router = express.Router()
 
-//Servicios
-const service = new ProductsService();
+// Servicios
+const service = new ProductsService()
 
-//GET MY ORDERS
+// GET MY ORDERS
 router.get('/my-orders',
-  passport.authenticate('jwt', {session: false}),
-  async(req,res,next)=>{
-
-    try{
-      const user = req.user;
-      const orders = await service.findByUser(user.sub);
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const user = req.user
+      const orders = await service.findByUser(user.sub)
 
       return res.status(200).json({
         orders
-      });
-
-    }catch(error){
-      next(error);
+      })
+    } catch (error) {
+      next(error)
     }
-});
+  })
 
-module.exports = router;
-
-
-
+module.exports = router

@@ -1,23 +1,22 @@
-const { Client } = require('pg');
+const { Client } = require('pg')
 
-async function getConnection(){
-
+async function getConnection () {
   const client = new Client({
     host: 'localhost',
     port: 5432,
     user: 'platzi',
     password: 'admin123'
-  });
+  })
 
   await client.connect(err => {
-      if (err) {
-        console.error('connection error', err.stack)
-      } else {
-        console.log('connected')
-      }
-  });
+    if (err) {
+      console.error('connection error', err.stack)
+    } else {
+      console.log('connected')
+    }
+  })
 
-  return client;
+  return client
 }
 
-module.exports = getConnection;
+module.exports = getConnection
