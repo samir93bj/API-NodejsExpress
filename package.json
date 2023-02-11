@@ -34,7 +34,8 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "prettier": "^2.7.1",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "supertest": "^6.3.3"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.0",
