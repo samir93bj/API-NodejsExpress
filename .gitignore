@@ -220,5 +220,6 @@ mysql_data
 
 #test
 coverage
+coverage_e2e
 
 # End of https://www.toptal.com/developers/gitignore/api/node,windows,linux,macos

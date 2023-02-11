@@ -13,7 +13,8 @@
     "prepare": "husky install",
     "lint": "esLint --ignore-path .gitignore . --ext .js",
     "lint:fix": "npm run lint -- --fix",
-    "e2e": "jest --config ./jest-e2e.config.json --verbose --coverage --detectOpenHandles --forceExit "
+    "e2e": "jest --config ./jest-e2e.config.json --verbose --detectOpenHandles --forceExit ",
+    "e2e:coverage": "jest --config ./jest-e2e.config.json --verbose --coverage --detectOpenHandles --forceExit "
   },
   "keywords": [],
   "author": "",
