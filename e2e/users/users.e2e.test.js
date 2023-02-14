@@ -92,6 +92,11 @@ describe('POST /users', () => {
 
     const response = await api.post('/api/v1/users').send(inputData).set({ Authorization: `Bearer ${token}` })
     expect(response.statusCode).toBe(200)
+
+    const newUser = await models.User.findByPk(response.body.user.id)
+    expect(newUser).toBeTruthy()
+    expect(newUser.email).toEqual(inputData.email)
+    expect(newUser.role).toEqual('customer')
   })
 })
 
