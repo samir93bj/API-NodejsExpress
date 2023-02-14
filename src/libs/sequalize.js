@@ -13,7 +13,7 @@ const PASSWORD = encodeURIComponent(config.dbPassword)
 const options = {
   dialect: 'postgres',
   // dialect: 'mysql',
-  logging: !config.isProd
+  logging: config.env === 'dev' ? console.log : false
 }
 
 if (config.isProd) {

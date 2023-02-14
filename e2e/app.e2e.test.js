@@ -9,7 +9,7 @@ describe('test for app', () => {
   beforeAll(() => {
     app = createApp()
     api = request(app)
-    server = app.listen(3000)
+    server = app.listen(3005)
   })
 
   afterAll(done => {

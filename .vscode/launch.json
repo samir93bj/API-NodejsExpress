@@ -1,21 +1,30 @@
 {
   "version": "1.0.0",
   "configurations": [
-      {
-          "name": "Service",
-          "runtimeArgs": ["start"], // npm run start
-          "request": "launch",
-          "runtimeExecutable": "npm",
-          "type": "node",
-          "skipFiles": ["<node_internals>/**"],
-      },
-      {
-          "name": "Watch",
-          "runtimeArgs": ["start","dev"], // npm run start:dev
-          "request": "launch",
-          "runtimeExecutable": "npm",
-          "type": "node",
-          "skipFiles": ["<node_internals>/**"],
-      }
-  ]
+    {
+        "name": "Service",
+        "runtimeArgs": [
+            "start"
+        ],
+        "request": "launch",
+        "runtimeExecutable": "npm",
+        "type": "node",
+        "skipFiles": [
+            "<node_internals>/**"
+        ]
+    },
+    {
+        "name": "Watch",
+        "runtimeArgs": [
+            "start",
+            "start:dev"
+        ],
+        "request": "launch",
+        "runtimeExecutable": "npm",
+        "type": "node",
+        "skipFiles": [
+            "<node_internals>/**"
+        ]
+    }
+]
 }

@@ -3,12 +3,14 @@ const passport = require('passport')
 const AuthService = require('./../services/auth.servece')
 const validatorHandler = require('../middlewares/validator.handler')
 const { changePassword } = require('../schemas/user.schema')
+const { loginUserSchema } = require('../schemas/auth.schema')
 
 const router = express.Router()
 const service = new AuthService()
 
 // LOGIN
 router.post('/login',
+  validatorHandler(loginUserSchema, 'body'),
   passport.authenticate('local', { session: false }),
   async (req, res, next) => {
     try {

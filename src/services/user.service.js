@@ -73,8 +73,7 @@ class usersService {
 
   // DELETE USER
   async delete (id) {
-    const getUser = await models.User.findOne(id)
-
+    const getUser = await models.User.findByPk(id)
     if (!getUser) {
       throw boom.notFound('User not found')
     }
