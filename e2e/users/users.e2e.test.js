@@ -104,7 +104,6 @@ describe('DELETE /users', () => {
   test('Should delete by id', async () => {
     const token = getAuthToken.body.token
     const user = await models.User.findOne({ where: { email: 'test@example.com' } })
-    console.log(user.toJSON())
 
     const response = await api.delete(`/api/v1/users/${user.id}`).set({ Authorization: `Bearer ${token}` })
     expect(response.statusCode).toBe(200)
