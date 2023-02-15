@@ -1,7 +1,19 @@
-require('dotenv').config()
+const env = process.env.NODE_ENV || 'dev'
+const envs = {
+  dev: '.env',
+  e2e: '.env.e2e'
+}
+
+const options = {}
+
+if (envs[env]) {
+  options.path = envs[env]
+}
+
+require('dotenv').config(options)
 
 const config = {
-  env: process.env.NODE_ENV || 'development',
+  env,
   isProd: process.env.NODE_ENV === 'production',
   port: process.env.PORT || 3000,
   dbUser: process.env.DB_USER,
@@ -16,5 +28,7 @@ const config = {
   emailPassword: process.env.EMAIL_PASSWORD,
   cloudinaryUrl: process.env.CLOUDINARY_URL
 }
+
+console.log(config)
 
 module.exports = { config }
