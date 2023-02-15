@@ -70,6 +70,9 @@ class AuthService {
       html: `<b>Ingresa a este link para recuperar contraseña: ${link}</b>`
     }
 
+    /*
+    TODO: Implement service modularizado
+  */
     const rta = await this.sendMail(mail)
     return rta
   }
@@ -94,6 +97,9 @@ class AuthService {
     }
   }
 
+  /*
+    TODO: Remove this service
+  */
   // Servicio de Mails
   async sendMail (infoEmail) {
     const transporter = nodemailer.createTransport({
