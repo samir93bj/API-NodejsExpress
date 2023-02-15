@@ -9,6 +9,7 @@ const customerRouter = require('./customer.router')
 const authRouter = require('./auth.router')
 const profileRouter = require('./profile.router')
 const uploadRouter = require('./upload.router')
+const cartRouter = require('./cart.router')
 const loadMassiveRouter = require('./loadMassive.router')
 
 function routerApi (app) {
@@ -21,6 +22,7 @@ function routerApi (app) {
   router.use('/customers', customerRouter)
   router.use('/profile', profileRouter)
   router.use('/uploads', uploadRouter)
+  router.use('/cart', cartRouter)
   router.use('/load-massive', loadMassiveRouter)
 }
 
