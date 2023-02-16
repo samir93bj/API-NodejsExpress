@@ -1,20 +1,23 @@
 const request = require('supertest')
 const createApp = require('../src/app')
+const { upSeed, downSeed } = require('./utils/seed')
 
 let app
 let api
 let server
 
 describe('test for app', () => {
-  beforeAll(() => {
+  beforeAll(async () => {
     app = createApp()
     api = request(app)
     server = app.listen(3005)
+
+    await upSeed()
   })
 
-  afterAll(done => {
+  afterAll(async () => {
+    await downSeed()
     server.close()
-    done()
   })
 
   test('should GET /products', async () => {

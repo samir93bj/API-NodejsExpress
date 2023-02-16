@@ -1,6 +1,7 @@
 const request = require('supertest')
 const createApp = require('../../src/app')
 const { models } = require('../../src/libs/sequalize')
+const { upSeed, downSeed } = require('../utils/seed')
 
 let app
 let api
@@ -9,21 +10,25 @@ let getAuthToken
 let user
 
 beforeAll(async () => {
-  user = await models.User.findByPk(17)
+  await upSeed()
+
+  app = createApp()
+  api = request(app)
+  server = app.listen(3005)
+
+  user = await models.User.findByPk(1)
   const inputData = {
     email: user.email,
     password: 'adminadmin'
   }
 
-  app = createApp()
-  api = request(app)
-  server = app.listen(3005)
   getAuthToken = await api.post('/api/v1/auth/login').send(inputData)
 })
 
-afterAll(done => {
+afterAll(async () => {
+  await downSeed()
+
   server.close()
-  done()
 })
 
 describe('GET /users/{id}', () => {
@@ -103,7 +108,7 @@ describe('POST /users', () => {
 describe('DELETE /users', () => {
   test('Should delete by id', async () => {
     const token = getAuthToken.body.token
-    const user = await models.User.findOne({ where: { email: 'test@example.com' } })
+    const user = await models.User.findByPk(1)
 
     const response = await api.delete(`/api/v1/users/${user.id}`).set({ Authorization: `Bearer ${token}` })
     expect(response.statusCode).toBe(200)

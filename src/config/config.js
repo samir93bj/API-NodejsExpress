@@ -29,6 +29,4 @@ const config = {
   cloudinaryUrl: process.env.CLOUDINARY_URL
 }
 
-console.log(config)
-
 module.exports = { config }

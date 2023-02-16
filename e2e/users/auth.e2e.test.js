@@ -1,6 +1,7 @@
 const request = require('supertest')
 const createApp = require('../../src/app')
 const { models } = require('../../src/libs/sequalize')
+const { upSeed, downSeed } = require('../utils/seed')
 
 let server
 let api
@@ -10,11 +11,14 @@ beforeAll(async () => {
   app = createApp()
   api = request(app)
   server = app.listen(3005)
+
+  await upSeed()
 })
 
-afterAll(done => {
+afterAll(async () => {
+  await downSeed()
+
   server.close()
-  done()
 })
 
 describe('POST /login', () => {
@@ -69,7 +73,8 @@ describe('POST /login', () => {
   })
 
   test('Should status code 200 with login success', async () => {
-    const user = await models.User.findByPk(17)
+    const user = await models.User.findByPk(1)
+    console.log(user.email)
     const inputData = {
       email: user.email,
       password: 'adminadmin'
