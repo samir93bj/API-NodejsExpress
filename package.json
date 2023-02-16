@@ -10,6 +10,8 @@
     "migrations:run": "sequelize-cli db:migrate",
     "migrations:revert": "sequelize-cli db:migrate:undo",
     "migrations:delete": "sequelize-cli db:migrate:undo:all",
+    "seed:all": "sequelize-cli db:seed:all",
+    "seed:undo": "sequelize-cli db:seed:undo:all",
     "prepare": "husky install",
     "lint": "esLint --ignore-path .gitignore . --ext .js",
     "lint:fix": "npm run lint -- --fix",
