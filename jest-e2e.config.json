@@ -1,0 +1,7 @@
+{
+  "moduleFileExtensions": ["js"],
+  "rootDir":".",
+  "testEnvironment":"node",
+  "testRegex":".e2e.test.js$",
+  "coverageDirectory": "coverage_e2e"
+}
