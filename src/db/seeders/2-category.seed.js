@@ -1,7 +1,11 @@
-const CATEGORY_TABLE = require('../models/category.model')
+const { CATEGORY_TABLE } = require('../models/category.model')
 
 module.exports = {
   up: async (queryInterface) => {
+    if (queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
+
     return queryInterface.bulkInsert(CATEGORY_TABLE, [{
       name: 'Jeans',
       image: 'https://image.com/jeans.png',
@@ -24,6 +28,10 @@ module.exports = {
     }])
   },
   down: (queryInterface) => {
+    if (queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
+
     return queryInterface.bulkDelete(CATEGORY_TABLE, null, {})
   }
 }

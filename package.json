@@ -63,6 +63,7 @@
     "pm2": "^5.2.2",
     "sequelize": "^6.28.0",
     "sequelize-cli": "^6.6.0",
+    "umzug": "^3.2.1",
     "uuid": "^9.0.0",
     "winston": "^3.8.2",
     "winston-mongodb": "^5.1.1",

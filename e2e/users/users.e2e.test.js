@@ -1,7 +1,7 @@
 const request = require('supertest')
 const createApp = require('../../src/app')
 const { models } = require('../../src/libs/sequalize')
-const { upSeed, downSeed } = require('../utils/seed')
+const { upSeed, downSeed } = require('../utils/umzug/umzug')
 
 let app
 let api

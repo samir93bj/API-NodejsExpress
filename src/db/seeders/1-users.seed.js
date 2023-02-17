@@ -1,9 +1,13 @@
-const USER_TABLE = require('../models/user.model')
+const { USER_TABLE } = require('../models/user.model')
 const bcrypt = require('bcrypt')
 
 module.exports = {
   up: async (queryInterface) => {
-    const passwordPlain = 'UserExample'
+    if (queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
+
+    const passwordPlain = 'adminadmin'
     const passwordEncrypt = await bcrypt.hash(passwordPlain, 10)
 
     return queryInterface.bulkInsert(USER_TABLE, [{
@@ -14,6 +18,10 @@ module.exports = {
     }])
   },
   down: (queryInterface) => {
+    if (queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
+
     return queryInterface.bulkDelete(USER_TABLE, null, {})
   }
 }
