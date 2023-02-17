@@ -11,11 +11,36 @@ module.exports = {
     const passwordEncrypt = await bcrypt.hash(passwordPlain, 10)
 
     return queryInterface.bulkInsert(USER_TABLE, [{
-      email: 'admin@domain.com',
+      email: 'admin2@domain.com',
       password: passwordEncrypt,
       role: 'admin',
       created_at: new Date()
-    }])
+    },
+    {
+      email: 'samir@domain.com',
+      password: passwordEncrypt,
+      role: 'customer',
+      created_at: new Date()
+    },
+    {
+      email: 'martin@domain.com',
+      password: passwordEncrypt,
+      role: 'customer',
+      created_at: new Date()
+    },
+    {
+      email: 'javier@domain.com',
+      password: passwordEncrypt,
+      role: 'customer',
+      created_at: new Date()
+    },
+    {
+      email: 'marcos@domain.com',
+      password: passwordEncrypt,
+      role: 'customer',
+      created_at: new Date()
+    }
+    ])
   },
   down: (queryInterface) => {
     if (queryInterface.context) {

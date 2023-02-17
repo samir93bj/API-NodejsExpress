@@ -13,7 +13,7 @@ const upSeed = async () => {
     await sequelize.sync({ force: true })
     await umzug.up()
   } catch (err) {
-    console.log(err)
+    // console.log(err)
   }
 }
 
