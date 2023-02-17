@@ -9,10 +9,12 @@ const router = express.Router()
 
 const service = new CategoriesService()
 
+/*
+  TODO: Finalizar los test de Categorias
+*/
+
 // GET USERS
 router.get('/',
-  passport.authenticate('jwt', { session: false }),
-  checkRoles('admin', 'customer'),
   async (req, res, next) => {
     try {
       const categories = await service.find()
