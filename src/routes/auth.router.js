@@ -47,10 +47,10 @@ router.post('/change-password',
   async (req, res, next) => {
     try {
       const { token, newPassword } = req.body
-      const resp = await service.changePassword(token, newPassword)
+      const message = await service.changePassword(token, newPassword)
 
       res.status(200).json({
-        resp
+        message
       })
     } catch (error) {
       next(error)

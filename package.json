@@ -17,7 +17,8 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_ENV=e2e jest --config ./jest-e2e.config.json --verbose --detectOpenHandles --forceExit --runInBand",
     "e2e": "cross-env NODE_ENV=e2e jest --config ./jest-e2e.config.json --verbose --detectOpenHandles --forceExit --runInBand",
-    "e2e:coverage": "cross-env NODE_ENV=e2e jest --config ./jest-e2e.config.json --verbose --coverage --detectOpenHandles --forceExit "
+    "e2e:coverage": "cross-env NODE_ENV=e2e jest --config ./jest-e2e.config.json --verbose --coverage --detectOpenHandles --forceExit ",
+    "e2e:ci": "cross-env NODE_ENV=ci jest --config ./jest-e2e.config.json --verbose --detectOpenHandles --forceExit --runInBand"
   },
   "keywords": [],
   "author": "",

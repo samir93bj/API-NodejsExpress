@@ -67,7 +67,6 @@ class usersService {
     }
     const rta = await user.update(data)
 
-    console.log(rta)
     return rta
   }
 

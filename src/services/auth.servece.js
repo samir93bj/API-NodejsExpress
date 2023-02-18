@@ -98,7 +98,7 @@ class AuthService {
   }
 
   /*
-    TODO: Remove this service
+    TODO: Remove this service -- Add try catch
   */
   // Servicio de Mails
   async sendMail (infoEmail) {
@@ -115,7 +115,7 @@ class AuthService {
     // send mail with defined transport object
     await transporter.sendMail(infoEmail)
 
-    return 'Email sent subject'
+    return { message: 'Email sent subject' }
   }
 }
 

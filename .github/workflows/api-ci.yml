@@ -1,0 +1,38 @@
+name: 'API CI'
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    container:
+      image: node:16
+
+    services:
+      postgres-e2e:
+        image: postgres:13
+        env:
+          POSTGRES_DB: db_e2e
+          POSTGRES_USER: e2e
+          POSTGRES_PASSWORD: e2e123456
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install
+        run: npm ci
+      - name: run e2e
+        run: npm run e2e:ci
+        env:
+          PUERTO: 3000
+          DATABASE_URL: 'postgres://e2e:e2e123456@postgres-e2e:5432/db_e2e'
+          API_KEY : 33344
+          JWT_SECRET: '74731A5846AE8A82C3F2145AE68DD'
+          EMAIL_USER: 'test@test.com'
+          EMAIL_PASSWORD: '123abc456dfg'
