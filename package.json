@@ -1,11 +1,11 @@
 {
-  "name": "03-apirest-express",
+  "name": "apirest-ecommerce",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon src/index.js",
-    "start": "node src/index.js",
+    "start": "pm2 start src/index.js",
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "sequelize-cli db:migrate",
     "migrations:revert": "sequelize-cli db:migrate:undo",
