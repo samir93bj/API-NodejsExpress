@@ -41,6 +41,14 @@ services:
       - 3306:3306
     volumes:
         - ./mysql_data:/var/lib/mysql
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    environment:
+      - REDIS_PASSWORD=myredispassword
+      - REDIS_DATABASES=16
+    ports:
+      - 6379:6379
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
