@@ -6,7 +6,7 @@ This is a RESTful API built with Node.js and Express. It uses a variety of depen
 
 
 ### Installation
-1 . Clone the repository: git clone https://github.com/your-username/03-apirest-express.git
+1 . Clone the repository: git clone https://github.com/samir93bj/03-apirest-express.git
 
 2 . Install dependencies: `npm install`
 
